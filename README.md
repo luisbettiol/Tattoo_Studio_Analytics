@@ -1,35 +1,34 @@
-*[Read this project in English](README.english.md)*
+*[Leer este proyecto en Español](README.spanish.md)*
 
-# Caso de Estudio: Optimización Operativa y Análisis de Mercado en la Industria del Tatuaje
-**Rol:** Analista de Datos y Consultor de Negocio  
-**Tecnologías:** Python (Pandas), SQL (MySQL), Power BI, DAX  
-
----
-
-## 1. Contexto y Problema de Negocio
-
-### El Panorama Macro
-La industria global del tatuaje se encuentra en una fase de expansión sin precedentes. Basado en los reportes de *Fortune Business Insights*, el tamaño del mercado global se valoró en **$2.43 billones de USD en 2023** y se proyecta que alcance los **$4.86 billones de USD para 2032**, lo que representa una tasa de crecimiento anual compuesta (CAGR) del 8.0%. Una industria que prácticamente duplicará su valor en una década exige una transición de la gestión informal hacia decisiones respaldadas por datos. 
-
-Además, la analítica macro revela que el **72.5% de la facturación global** se concentra en Norteamérica y Europa, mercados maduros y de alto tráfico donde el costo operativo por hora de silla es el KPI crítico de supervivencia.
-
-### La Problemática Micro
-Un estudio de tatuajes de alto rendimiento, ubicado en una zona comercial de alta densidad peatonal, presenta un crecimiento en la facturación pero con ineficiencias operativas ocultas:
-1. **Incertidumbre en la Rentabilidad de la Silla:** Se desconoce qué estilos de tatuaje optimizan mejor el ingreso por hora trabajada, lo que provoca una asignación ineficiente de la agenda y de las campañas de marketing.
-2. **Paridad Ineficiente en Walk-ins:** El estudio maneja dos modalidades de atención: citas programadas (`Pre-booked`) y clientes espontáneos (`Walk-in`). Actualmente, ambos segmentos comparten la misma estructura tarifaria. Administrativamente, esto representa una oportunidad perdida de capturar valor a través de una "tarifa de conveniencia" que capitalice el alto tráfico y la compra por impulso.
-
-### Objetivos del Proyecto
-* **Objetivo 1:** Construir un pipeline automatizado para limpiar y migrar el histórico de operaciones del estudio.
-* **Objetivo 2:** Identificar los estilos de tatuaje con mayor retorno financiero por hora para maximizar la capacidad de la agenda.
-* **Objetivo 3:** Evaluar la brecha de ingresos entre *Pre-booked* y *Walk-ins* para diseñar una nueva estrategia de precios.
-* **Objetivo 4:** Validar si el comportamiento demográfico del estudio se alinea con la tendencia macro del mercado (donde el grupo de 18-35 años abarca más del 55% de la demanda).
+# Case Study: Boosting Efficiency and Market Analysis in the Tattoo Industry
+**Role:** Data Analyst & Business Consultant  
+**Tech Stack:** Python (Pandas), SQL (MySQL), Power BI, DAX  
 
 ---
 
-## 2. Pipeline de Limpieza e Ingesta de Datos (Python)
+## 1. Background & Business Problem
 
-El dataset operativo original se encontraba en formato `.csv` con montos expresados en rupias y registros de servicios adicionales con valores nulos. Se construyó un script en **Python (Pandas)** para estandarizar las métricas a dólares americanos (USD), corregir tipos de datos temporales y exportar de forma directa la tabla limpia hacia un servidor local de **MySQL**.
+### The Big Picture (Macro View)
+The global tattoo industry is booming like never before. According to reports from *Fortune Business Insights*, the global market was worth **$2.43 billion USD back in 2023** and is expected to hit **$4.86 billion USD by 2032**. That’s a steady 8.0% annual growth rate (CAGR). An industry that’s literally going to double its size in a decade can’t be run on "gut feelings" anymore—it needs data-driven decisions.
 
+On top of that, macro data shows that **72.5% of global revenue** is packed into North America and Europe. In these mature, high-traffic markets, the hourly cost of keeping a shop chair running is the ultimate make-or-break metric.
+
+### The Local Reality (Micro View)
+A high-performing tattoo studio located in a busy, high-foot-traffic commercial area is bringing in good money, but it has some hidden operational leaks:
+
+* **Guesswork in Chair Profitability:** The management doesn't really know which tattoo styles make the most money per hour. This leads to messy scheduling and wasted money on marketing campaigns that target the wrong styles.
+* **The Walk-in Price Trap:** The shop handles two types of clients: scheduled appointments (`Pre-booked`) and spontaneous, off-the-street clients (`Walk-in`). Right now, they both pay the exact same rates. From a business standpoint, this is a massive missed opportunity. The shop is failing to charge a "convenience fee" that takes advantage of high foot traffic and impulse buys.
+
+### Project Goals
+* **Goal 1:** Build an automated pipeline to clean up and migrate the shop's entire operational history.
+* **Goal 2:** Pinpoint which tattoo styles bring in the highest cash flow per hour to maximize schedule efficiency.
+* **Goal 3:** Measure the actual income gap between *Pre-booked* appointments and *Walk-ins* to design a smarter pricing strategy.
+* **Goal 4:** Double-check if the shop's customer demographics match the macro trends of the market (where the 18-35 age group makes up over 55% of the total demand).
+
+
+## 2. Data Cleaning & Ingestion Pipeline (Python)
+
+The original dataset was sitting in a `.csv` file, with prices listed in Rupees and plenty of null values in the extra services column. To fix this, I built a **Python (Pandas)** script to standardize all financial metrics into US Dollars (USD), fix the date formats, and pipe the clean table straight into a local **MySQL** database.
 ```python
 #Import Libraries
 import pandas as pd
@@ -74,13 +73,12 @@ df.to_sql(
 print("Dataset Exported")
 ```
 
----
 
-## 3. Análisis Exploratorio Avanzado (SQL)
+## 3. Advanced Exploratory Data Analysis (SQL)
 
-Con los datos estructurados en la base de datos relacional, se ejecutaron consultas avanzadas utilizando **Common Table Expressions (CTEs)** y funciones de agregación para desglosar las dos variables críticas del negocio.
+Once the data was structured inside the relational database, I ran advanced queries using Common Table Expressions (CTEs) and aggregate functions to break down the two most critical variables of the business.
 
-### Consulta 1: Rendimiento y Facturación por Estilo de Tatuaje
+### Query 1: Performance and Revenue by Tattoo Style
 ```sql
 WITH tabla_horas AS ( 
 	SELECT 
@@ -99,7 +97,7 @@ GROUP BY 1
 ORDER BY 3 DESC;
 ```
 
-### Consulta 2: Intersección entre Modalidad de Sesión y Estilo
+### Query 2: Cross-Section Analysis: Session Type vs. Tattoo Style
 ```sql
 SELECT
     session_type,
@@ -112,7 +110,7 @@ GROUP BY 1, 2
 ORDER BY 1, 3 DESC;
 ```
 
-### Consulta 3: Porcentaje de Participación por Segmentos de Clientela por Rango de Edad 
+### Query 3: Market Share Percentage by Customer Age Groups
 ```sql
 SELECT
 segmento,
@@ -133,31 +131,30 @@ GROUP BY 1
 ORDER BY 3 DESC;
 ```
 
----
 
-## 4. Hallazgos Clave (Insights de Negocio)
+## 4. Key Findings (Business Insights)
 
-Tras cruzar los resultados de las consultas y la segmentación demográfica, se extrajeron tres conclusiones analíticas de alto impacto:
+After cross-referencing the query results with the demographic breakdown, I pulled four high-impact conclusions from the data:
 
-1. **La Paridad Ociosa del Walk-in:** Los datos demuestran que el ticket promedio y el valor por hora de los clientes _Walk-in_ son prácticamente idénticos a los de las citas programadas (_Pre-booked_). En un entorno de alto tráfico peatonal, esto confirma que el estudio está subsidiando la urgencia/impulsividad del cliente, perdiendo la oportunidad de capturar un margen de ganancia más alto por tarifa de conveniencia.
+* **The Walk-in Pricing Trap:** The data shows that both the average ticket and the hourly rate for *Walk-in* clients are pretty much identical to scheduled appointments (*Pre-booked*). In a high-foot-traffic area, this means the studio is basically subsidizing the customer's urgency and impulse behavior. The business is missing out on a huge opportunity to grab higher profit margins through a "convenience fee."
 
-2. **La Silla de Oro (Realismo vs. Personalizado):** El estilo **Realism** lidera la eficiencia del estudio con la tarifa por hora más alta del negocio (**$140.07 USD/hora**). Por otro lado, el estilo **Custom** domina el volumen absoluto de demanda (435 servicios - 21.75% del Total) y la facturación total ($120,387 USD). Juntos, representan los motores económicos del local.
+* **The "Golden Chairs" (Realism vs. Custom):** **Realism** is the most efficient style in the shop, leading the pack with the highest hourly rate at **$140.07 USD/hour**. On the flip side, **Custom** tattoos dominate absolute demand volume (435 services—making up 21.75% of the total) and total revenue ($120,387 USD). Together, these two styles are the main economic engines of the studio.
 
-3. **Estabilidad del Catálogo Fijo:** Los estilos _Tribal_ y _Minimalist_, aunque se ubican en el escalón inferior de las métricas, mantienen volúmenes y tickets sumamente cercanos a los líderes. No representan un lastre operativo, sino una base sólida y constante de flujo de caja que estabiliza el negocio.
+* **The Steady Cash Flow Baseline:** Even though *Tribal* and *Minimalist* styles sit at the lower end of the metrics, their volume and ticket sizes stay remarkably close to the top performers. They aren't a drag on operations at all; instead, they provide a rock-solid, predictable baseline of daily cash flow that keeps the business stable.
 
-4. **Madurez Demográfica y Poder Adquisitivo Elevado:** A diferencia de las tendencias macro generales del sector —donde el núcleo de la demanda suele concentrarse en audiencias más jóvenes (18-30 años), los datos de este estudio revelan que el segmento de clientes más fuerte pertenece a los **31 años en adelante, con especial dominancia en el rango de 31-40 años**. Si bien una audiencia más madura puede reducir el factor de "impulsividad" en la compra, administrativamente representa una enorme ventaja competitiva: es un público con mayor estabilidad laboral, ingresos más altos y, por ende, un **poder adquisitivo significativamente superior**. Esto se traduce en clientes más decididos que optan por piezas más grandes, complejas y elaboradas, inyectando un mayor margen de beneficio neto por sesión en el estudio.
+* **A Mature Crowd with Higher Buying Power:** Unlike general macro trends where younger crowds (18-30 years old) drive the market, the data shows our sweet spot is actually **clients aged 31 and up, with a major concentration in the 31-40 bracket**. While a more mature audience might mean fewer impulse buys, from a business perspective it's an incredible advantage: they have higher job stability, better income, and significantly more spending power. This means more decisive clients who choose larger, more complex, and highly detailed pieces, driving up the net profit margin per session.
 
----
 
-## 5. Visualización y Recomendaciones Estratégicas
+## 5. Visualization & Strategic Recommendations
 
-Se diseñó un Dashboard ejecutivo e interactivo en **Power BI**, conectando de forma directa la tabla de MySQL y modelando métricas clave mediante **DAX** (como el cálculo dinámico del ticket promedio y la segmentación de clientes por rangos de edad mediante `SWITCH(TRUE())`).
+I designed an interactive, executive-level dashboard in Power BI, connecting it directly to the MySQL database. Key metrics were modeled using custom DAX formulas—such as dynamic average ticket calculations and age bracket segmentation using the `SWITCH(TRUE())` logic.
 
-### Recomendaciones de Consultoría para la Gerencia:
-- **Implementación de Tarifa Premium para Walk-ins:** Reestructurar los precios e introducir un recargo estratégico del **10% al 15% por hora** en los servicios _Walk-in_, aplicando esta medida con prioridad en los estilos de alta demanda (Custom, Script y Realism) para monetizar de forma óptima el tráfico peatonal de la zona.
+### Consulting Recommendations for Management:
 
-- **Ajuste de Precios por Especialización:** Elevar la tarifa base de las citas programadas para _Realism_ y _Custom_. Al ser estilos que requieren alta destreza y presentan la mayor disposición de pago por parte del cliente, el estudio puede absorber un incremento de margen sin afectar significativamente el volumen de reservas.
+*   **Implement Premium Pricing for Walk-ins:** Restructure the pricing model to introduce a strategic **10% to 15% hourly markup** on all *Walk-in* services. This should be prioritized for high-demand styles (*Custom*, *Script*, and *Realism*) to fully monetize the heavy foot traffic in the area.
 
-- **Campañas de Marketing Segmentadas:** Dirigir el presupuesto publicitario digital a captar clientes de entre 18 y 30 años (el segmento demográfico que el Dashboard identificó como el de mayor volumen), promocionando piezas de _Realismo_ para optimizar las horas disponibles de las sillas del estudio.
+*   **Price Adjustments Based on Specialization:** Raise the base rate for scheduled (*Pre-booked*) appointments in *Realism* and *Custom* styles. Since these styles require high-level artistic skill and customers already show a strong willingness to pay, the studio can easily absorb a margin increase without hurting booking volumes.
 
-- **Estrategia de Marketing de Alta Conversión para Clientes Maduros:** Diseñar y ejecutar campañas de marketing digital específicamente segmentadas para el público de 31 a 40 años. A diferencia de la publicidad tradicional del sector, enfocada en la rebeldía o las tendencias pasajeras de la audiencia joven, el contenido en redes sociales debe adoptar un tono más maduro, sofisticado y profesional. Se debe hacer énfasis en la experiencia de los artistas, las condiciones de bioseguridad, el valor artístico de las piezas grandes y la exclusividad del servicio. Esto permitirá acelerar la adquisición del perfil de cliente más rentable y con mayor valor de vida (Lifetime Value) para el estudio.
+*   **Targeted High-Volume Marketing:** Direct a portion of the digital ad budget toward capturing the 18-30 age group—the demographic identified by the dashboard as the highest in overall volume—by showcasing *Realism* pieces to fill any open gaps in the studio's schedule.
+
+*   **High-Conversion Marketing Strategy for Mature Clients:** Design and run digital marketing campaigns specifically tailored to the **31-40 age bracket**. Unlike traditional industry ads that focus on rebellion or fast-moving youth trends, social media content for this group should be mature, sophisticated, and professional. The focus should shift to artist experience, strict biosecurity standards, the artistic value of large-scale pieces, and service exclusivity. This will speed up customer acquisition for the studio's most profitable, highest Lifetime Value (LTV) segment.
