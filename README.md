@@ -1,3 +1,5 @@
+*[Read this project in English](README.english.md)*
+
 # Caso de Estudio: Optimización Operativa y Análisis de Mercado en la Industria del Tatuaje
 **Rol:** Analista de Datos y Consultor de Negocio  
 **Tecnologías:** Python (Pandas), SQL (MySQL), Power BI, DAX  

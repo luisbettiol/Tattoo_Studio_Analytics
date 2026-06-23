@@ -1,3 +1,5 @@
+*[Leer este proyecto en Español](README.md)*
+
 # Case Study: Boosting Efficiency and Market Analysis in the Tattoo Industry
 **Role:** Data Analyst & Business Consultant  
 **Tech Stack:** Python (Pandas), SQL (MySQL), Power BI, DAX  
